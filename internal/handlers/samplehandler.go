@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ExampleHandler(c *gin.Context) {
+func SampleHandler(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"message": "Hello World!",
 	})
