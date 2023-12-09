@@ -6,12 +6,13 @@ import (
 
 	"github.com/Okabe-Junya/api-template-go/internal/handlers"
 	"github.com/gin-gonic/gin"
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
 	// initialize sql
-	db, err := sql.Open("sqlite3", "file:mydatabase.db?cache=shared&mode=rwc")
+	dsn := "user:password@tcp(db:3306)/mydatabase?parseTime=true"
+	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		log.Fatal("Error opening database:", err)
 	}
