@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/Okabe-Junya/api-template-go/internal/db"
@@ -21,7 +20,6 @@ func NewItemHandler(queries *db.Queries) *ItemHandler {
 func (h *ItemHandler) CreateItem(c *gin.Context) {
 	var item db.CreateItemParams
 	if err := c.BindJSON(&item); err != nil {
-		fmt.Println(err)
 		c.JSON(400, gin.H{"error": "invalid request"})
 		return
 	}

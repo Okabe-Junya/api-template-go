@@ -15,13 +15,6 @@ func main() {
 	conn, err := sql.Open("mysql", "user:password@tcp(localhost:3306)/db")
 	if err != nil {
 		log.Fatal("Error opening database:", err)
-	} else {
-		log.Println("Success opening database")
-		// try to connect to the server
-		err = conn.Ping()
-		if err != nil {
-			log.Fatal("Error connecting to the server:", err)
-		}
 	}
 	defer conn.Close()
 
