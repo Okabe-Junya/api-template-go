@@ -7,6 +7,7 @@ import (
 	"github.com/Okabe-Junya/api-template-go/internal/db"
 	"github.com/Okabe-Junya/api-template-go/internal/handlers"
 	"github.com/Okabe-Junya/api-template-go/internal/logger"
+	"github.com/Okabe-Junya/api-template-go/internal/middleware"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -28,6 +29,7 @@ func main() {
 
 	// initialize router
 	router := gin.Default()
+	router.Use(middleware.Logger(logger.Log))
 
 	// initialize handlers
 	userHandler := handlers.NewUserHandler(query)
