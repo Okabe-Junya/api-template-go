@@ -4,10 +4,27 @@
 
 package db
 
-import ()
+import (
+	"database/sql"
+)
+
+type Item struct {
+	ID          int32  `json:"id"`
+	Name        string `json:"name"`
+	Price       int32  `json:"price"`
+	Description string `json:"description"`
+	Stock       int32  `json:"stock"`
+}
 
 type User struct {
 	ID    int32  `json:"id"`
 	Name  string `json:"name"`
 	Email string `json:"email"`
+}
+
+type UserItem struct {
+	UserID       int32        `json:"user_id"`
+	ItemID       int32        `json:"item_id"`
+	Quantity     int32        `json:"quantity"`
+	PurchaseDate sql.NullTime `json:"purchase_date"`
 }
