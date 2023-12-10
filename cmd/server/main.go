@@ -6,11 +6,16 @@ import (
 
 	"github.com/Okabe-Junya/api-template-go/internal/db"
 	"github.com/Okabe-Junya/api-template-go/internal/handlers"
+	"github.com/Okabe-Junya/api-template-go/internal/logger"
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func main() {
+	// initialize logger
+	logger.InitLogger()
+	defer logger.Log.Sync()
+
 	// initialize db connection
 	conn, err := sql.Open("mysql", "user:password@tcp(localhost:3306)/db")
 	if err != nil {
