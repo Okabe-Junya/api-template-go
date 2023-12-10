@@ -15,10 +15,10 @@ INSERT INTO items (name, price, description, stock) VALUES (?, ?, ?, ?)
 `
 
 type CreateItemParams struct {
-	Name        string         `json:"name"`
-	Price       string         `json:"price"`
-	Description sql.NullString `json:"description"`
-	Stock       int32          `json:"stock"`
+	Name        string `json:"name"`
+	Price       int32  `json:"price"`
+	Description string `json:"description"`
+	Stock       int32  `json:"stock"`
 }
 
 func (q *Queries) CreateItem(ctx context.Context, arg CreateItemParams) error {
@@ -244,11 +244,11 @@ UPDATE items SET name = ?, price = ?, description = ?, stock = ? WHERE id = ?
 `
 
 type UpdateItemParams struct {
-	Name        string         `json:"name"`
-	Price       string         `json:"price"`
-	Description sql.NullString `json:"description"`
-	Stock       int32          `json:"stock"`
-	ID          int32          `json:"id"`
+	Name        string `json:"name"`
+	Price       int32  `json:"price"`
+	Description string `json:"description"`
+	Stock       int32  `json:"stock"`
+	ID          int32  `json:"id"`
 }
 
 func (q *Queries) UpdateItem(ctx context.Context, arg UpdateItemParams) error {

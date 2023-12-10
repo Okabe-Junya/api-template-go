@@ -9,11 +9,11 @@ import (
 )
 
 type Item struct {
-	ID          int32          `json:"id"`
-	Name        string         `json:"name"`
-	Price       string         `json:"price"`
-	Description sql.NullString `json:"description"`
-	Stock       int32          `json:"stock"`
+	ID          int32  `json:"id"`
+	Name        string `json:"name"`
+	Price       int32  `json:"price"`
+	Description string `json:"description"`
+	Stock       int32  `json:"stock"`
 }
 
 type User struct {
