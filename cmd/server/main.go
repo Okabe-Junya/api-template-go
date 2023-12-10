@@ -33,6 +33,8 @@ func main() {
 
 	// initialize handlers
 	userHandler := handlers.NewUserHandler(query)
+	itemHandler := handlers.NewItemHandler(query)
+	userItemHandler := handlers.NewUserItemHandler(query)
 
 	// register routes
 	router.GET("/", handlers.SampleHandler)
@@ -40,6 +42,14 @@ func main() {
 	router.POST("/users", userHandler.CreateUser)
 	router.GET("/users/:id", userHandler.GetUser)
 	router.DELETE("/users/:id", userHandler.DeleteUser)
+
+	router.POST("/items", itemHandler.CreateItem)
+	router.GET("/items/:id", itemHandler.GetItem)
+	router.DELETE("/items/:id", itemHandler.DeleteItem)
+
+	router.POST("/user_items", userItemHandler.CreateUserItem)
+	router.GET("/user_items/:user_id/:item_id", userItemHandler.GetUserItem)
+	router.DELETE("/user_items/:user_id/:item_id", userItemHandler.DeleteUserItem)
 
 	// run server
 	router.Run(":8080")
