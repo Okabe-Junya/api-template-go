@@ -1,6 +1,6 @@
 module github.com/Okabe-Junya/api-template-go
 
-go 1.22.0
+go 1.22.1
 
 require (
 	github.com/gin-gonic/gin v1.9.1
