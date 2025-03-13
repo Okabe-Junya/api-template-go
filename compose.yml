@@ -1,17 +1,25 @@
 version: '3'
 services:
-  # app:
-  #   build: .
-  #   ports:
-  #     - "8080:8080"
-  #   volumes:
-  #     - .:/app
-  #   depends_on:
-  #     - db
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    environment:
+      - DB_CONNECTION=user:password@tcp(db:3306)/db
+      - GIN_MODE=debug
+      - PORT=8080
+    networks:
+      - app-network
+
   db:
     image: mysql:9.2
     volumes:
       - ./sql/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - mysql-data:/var/lib/mysql
     platform: linux/arm64/v8
     command: --default-authentication-plugin=mysql_native_password
     environment:
@@ -21,3 +29,53 @@ services:
       MYSQL_PASSWORD: password
     ports:
       - "3306:3306"
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 5s
+      retries: 10
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./monitoring/prometheus:/etc/prometheus
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    ports:
+      - "9090:9090"
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+  grafana:
+    image: grafana/grafana:latest
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password
+      - GF_USERS_ALLOW_SIGN_UP=false
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+    depends_on:
+      - prometheus
+
+volumes:
+  mysql-data:
+  prometheus-data:
+  grafana-data:
+
+
+networks:
+  app-network:
+    driver: bridge
