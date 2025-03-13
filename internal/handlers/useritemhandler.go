@@ -7,16 +7,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// UserItemHandler handles HTTP requests for user-item relationship operations
 type UserItemHandler struct {
 	Queries *db.Queries
 }
 
+// NewUserItemHandler creates a new UserItemHandler instance
 func NewUserItemHandler(queries *db.Queries) *UserItemHandler {
 	return &UserItemHandler{
 		Queries: queries,
 	}
 }
 
+// CreateUserItem handles POST requests to create a new user-item relationship
 func (h *UserItemHandler) CreateUserItem(c *gin.Context) {
 	var userItem db.CreateUserItemParams
 	if err := c.BindJSON(&userItem); err != nil {
@@ -30,6 +33,7 @@ func (h *UserItemHandler) CreateUserItem(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "success"})
 }
 
+// GetUserItem handles GET requests to retrieve a user-item relationship by user ID and item ID
 func (h *UserItemHandler) GetUserItem(c *gin.Context) {
 	userID, err := strconv.Atoi(c.Param("user_id"))
 	if err != nil {
@@ -49,6 +53,7 @@ func (h *UserItemHandler) GetUserItem(c *gin.Context) {
 	c.JSON(200, userItem)
 }
 
+// DeleteUserItem handles DELETE requests to remove a user-item relationship by user ID and item ID
 func (h *UserItemHandler) DeleteUserItem(c *gin.Context) {
 	userID, err := strconv.Atoi(c.Param("user_id"))
 	if err != nil {

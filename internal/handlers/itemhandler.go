@@ -7,16 +7,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// ItemHandler handles HTTP requests for item operations
 type ItemHandler struct {
 	Queries *db.Queries
 }
 
+// NewItemHandler creates a new ItemHandler instance
 func NewItemHandler(queries *db.Queries) *ItemHandler {
 	return &ItemHandler{
 		Queries: queries,
 	}
 }
 
+// CreateItem handles POST requests to create a new item
 func (h *ItemHandler) CreateItem(c *gin.Context) {
 	var item db.CreateItemParams
 	if err := c.BindJSON(&item); err != nil {
@@ -30,6 +33,7 @@ func (h *ItemHandler) CreateItem(c *gin.Context) {
 	c.JSON(200, gin.H{"message": "success"})
 }
 
+// GetItem handles GET requests to retrieve an item by ID
 func (h *ItemHandler) GetItem(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -44,6 +48,7 @@ func (h *ItemHandler) GetItem(c *gin.Context) {
 	c.JSON(200, item)
 }
 
+// DeleteItem handles DELETE requests to remove an item by ID
 func (h *ItemHandler) DeleteItem(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {

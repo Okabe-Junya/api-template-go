@@ -1,3 +1,4 @@
+// Package handlers provides HTTP request handlers for the API
 package handlers
 
 import (
@@ -7,16 +8,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// UserHandler handles HTTP requests for user operations
 type UserHandler struct {
 	Queries *db.Queries
 }
 
+// NewUserHandler creates a new UserHandler instance
 func NewUserHandler(queries *db.Queries) *UserHandler {
 	return &UserHandler{
 		Queries: queries,
 	}
 }
 
+// CreateUser handles POST requests to create a new user
 func (h *UserHandler) CreateUser(c *gin.Context) {
 	var user db.CreateUserParams
 	if err := c.BindJSON(&user); err != nil {
@@ -34,9 +38,9 @@ func (h *UserHandler) CreateUser(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"message": "success",
 	})
-	return
 }
 
+// GetUser handles GET requests to retrieve a user by ID
 func (h *UserHandler) GetUser(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -57,9 +61,9 @@ func (h *UserHandler) GetUser(c *gin.Context) {
 		"name":  user.Name,
 		"email": user.Email,
 	})
-	return
 }
 
+// DeleteUser handles DELETE requests to remove a user by ID
 func (h *UserHandler) DeleteUser(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -76,5 +80,4 @@ func (h *UserHandler) DeleteUser(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"message": "success",
 	})
-	return
 }
