@@ -1,5 +1,4 @@
-name: golanci-lint
-
+name: golangci-lint
 on:
   push:
     branches:
