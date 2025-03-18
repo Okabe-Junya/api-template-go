@@ -1,48 +1,82 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
+    "config:recommended",
     ":timezone(Asia/Tokyo)",
     ":prHourlyLimitNone",
     ":automergePatch",
     ":automergeMinor"
   ],
-  "schedule": ["after 3am and before 9am every weekday"],
+  "schedule": [
+    "after 3am and before 9am every weekday"
+  ],
   "dependencyDashboard": true,
-  "golang": {
-    "commitMessageAction": "Bump",
-    "commitMessageExtra": "to {{newValue}}",
-    "commitMessageTopic": "module {{depName}}",
-    "postUpdateOptions": ["gomodTidy", "gomodUpdateImportPaths"]
-  },
-  "labels": ["dependencies", "renovate"],
+  "labels": [
+    "dependencies",
+    "renovate"
+  ],
   "packageRules": [
     {
-      "matchUpdateTypes": ["pin"],
-      "addLabels": ["pin"]
+      "matchCategories": [
+        "golang"
+      ],
+      "commitMessageAction": "Bump",
+      "commitMessageExtra": "to {{newValue}}",
+      "commitMessageTopic": "module {{depName}}",
+      "postUpdateOptions": [
+        "gomodTidy",
+        "gomodUpdateImportPaths"
+      ]
     },
     {
-      "matchUpdateTypes": ["major"],
-      "addLabels": ["major"]
+      "matchUpdateTypes": [
+        "pin"
+      ],
+      "addLabels": [
+        "pin"
+      ]
     },
     {
-      "matchUpdateTypes": ["minor"],
-      "addLabels": ["minor"]
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "addLabels": [
+        "major"
+      ]
     },
     {
-      "matchUpdateTypes": ["patch"],
-      "addLabels": ["patch"]
+      "matchUpdateTypes": [
+        "minor"
+      ],
+      "addLabels": [
+        "minor"
+      ]
+    },
+    {
+      "matchUpdateTypes": [
+        "patch"
+      ],
+      "addLabels": [
+        "patch"
+      ]
     }
   ],
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": [".*y[a]?ml$"],
-      "matchStrings": ["go install (?<depName>[^@]+?)@(?<currentValue>.+)\n"],
+      "customType": "regex",
+      "fileMatch": [
+        ".*y[a]?ml$"
+      ],
+      "matchStrings": [
+        "go install (?<depName>[^@]+?)@(?<currentValue>.+)\n"
+      ],
       "datasourceTemplate": "go"
     }
   ],
   "vulnerabilityAlerts": {
     "enabled": true,
-    "labels": ["security-update"]
+    "labels": [
+      "security-update"
+    ]
   }
 }
