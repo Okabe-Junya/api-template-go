@@ -16,7 +16,7 @@ services:
       - app-network
 
   db:
-    image: mysql:9.2
+    image: mysql:9.3
     volumes:
       - ./sql/schema.sql:/docker-entrypoint-initdb.d/schema.sql
       - mysql-data:/var/lib/mysql
