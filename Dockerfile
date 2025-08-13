@@ -1,4 +1,4 @@
-FROM golang:1.24
+FROM golang:1.25
 
 # install cmake
 RUN apt-get update && apt-get install -y cmake
